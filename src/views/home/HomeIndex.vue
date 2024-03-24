@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view></router-view>
+    <h1>我是登录后的界面</h1>
   </div>
 </template>
 
