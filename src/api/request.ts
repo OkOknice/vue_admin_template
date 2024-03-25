@@ -25,8 +25,11 @@ class Request {
     // 每个instance实例都添加拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        // loading/token
-        config.headers['token'] = 'Admin Token'
+        if (config.headers) {
+          if (localStorage.getItem('token')) {
+            config.headers['token'] = localStorage.getItem('token')
+          }
+        }
         console.log('全局请求成功的拦截')
         return config
       },
@@ -55,7 +58,6 @@ class Request {
 
     // 针对特定的hyRequest实例添加拦截器
     this.instance.interceptors.request.use(
-      //@ts-expect-error 忽略当前文件ts类型的检测否则有红色提示(打包会失败)
       config.interceptors?.requestSuccessFn,
       config.interceptors?.requestFailureFn,
     )

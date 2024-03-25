@@ -5,15 +5,15 @@
       <el-col :span="12" :xs="24">
         <div class="login-contanier">
           <div class="login-title">OKOK 管理后台模板</div>
-          <el-form>
-            <el-form-item>
+          <el-form ref="formRef" :rules="ruleForm" :model="loginFrom">
+            <el-form-item prop="username">
               <el-input
                 placeholder="请输入账号"
                 v-model="loginFrom.username"
                 :prefix-icon="User"
               />
             </el-form-item>
-            <el-form-item>
+            <el-form-item prop="password">
               <el-input
                 type="password"
                 placeholder="请输入密码"
@@ -32,22 +32,54 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { User, Lock } from '@element-plus/icons-vue'
+import { ref, reactive } from 'vue'
+import userStore from '@/store/modules/userStore'
+import { useRouter } from 'vue-router'
 
-interface ILoginForm {
-  username: string
-  password: string
-}
+import { User, Lock } from '@element-plus/icons-vue'
+import { ElNotification } from 'element-plus'
+import type { FormRules, FormInstance } from 'element-plus'
+
+import type { ILoginForm } from '@/api/user/type'
+
+const useUserStore = userStore()
+const $router = useRouter()
+
+const ruleForm = reactive<FormRules<ILoginForm>>({
+  username: [
+    { required: true, message: '请输入账号', trigger: 'blur' },
+    { min: 5, max: 8, message: '长度在5-8之间', trigger: 'blur' },
+  ],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+})
 
 const loginFrom = ref<ILoginForm>({
   username: '',
   password: '',
 })
+const formRef = ref<FormInstance>()
 
 const login = () => {
-  console.log('login')
-  console.log(loginFrom.value)
+  if (!formRef.value) {
+    return
+  }
+  formRef.value.validate(async (valid) => {
+    if (valid) {
+      try {
+        await useUserStore.loginAction(loginFrom.value)
+        ElNotification({
+          type: 'success',
+          message: '登录成功',
+        })
+        $router.push('/')
+      } catch (error) {
+        ElNotification({
+          type: 'error',
+          message: (error as Error).message,
+        })
+      }
+    }
+  })
 }
 </script>
 
