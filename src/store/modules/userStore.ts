@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { loginUser } from '@/api/user/user'
 
+import { constRoute } from '@/routers/constRoute'
+
 import type { ILoginForm } from '@/api/user/type'
 import type { IUserStore } from './type'
 
@@ -8,6 +10,7 @@ const useUserStore = defineStore('user', {
   state: (): IUserStore => {
     return {
       token: localStorage.getItem('token'),
+      menuList: constRoute,
     }
   },
   actions: {

@@ -19,6 +19,7 @@
                 placeholder="请输入密码"
                 v-model="loginFrom.password"
                 :prefix-icon="Lock"
+                show-password
               />
             </el-form-item>
             <el-button class="login-btn" type="primary" @click="login">
