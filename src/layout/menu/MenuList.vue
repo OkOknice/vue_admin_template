@@ -6,6 +6,7 @@
           v-if="!item.children && !item.meta?.isHidden"
           :index="item.path"
         >
+          <!-- <el-icon><location /></el-icon> -->
           {{ item.meta?.routeName }}
         </el-menu-item>
         <el-menu-item
@@ -44,4 +45,8 @@ export default {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="scss" scoped>
+.el-menu {
+  border-right: none;
+}
+</style>
