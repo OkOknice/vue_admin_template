@@ -1,35 +1,45 @@
 <template>
   <div>
-    <el-menu background-color="#001529" text-color="#fff">
-      <template v-for="item in menuList" :key="item.path">
-        <el-menu-item
-          v-if="!item.children && !item.meta?.isHidden"
-          :index="item.path"
-        >
-          <!-- <el-icon><location /></el-icon> -->
+    <template v-for="item in menuList" :key="item.path">
+      <el-menu-item
+        v-if="!item.children && !item.meta?.isHidden"
+        :index="item.path"
+      >
+        <el-icon>
+          <component :is="item?.meta?.icon" />
+        </el-icon>
+        <template #title>
           {{ item.meta?.routeName }}
-        </el-menu-item>
-        <el-menu-item
-          v-if="
-            item.children && item.children.length === 1 && !item.meta?.isHidden
-          "
-          :index="item.path"
-        >
-          {{ item.children[0]?.meta?.routeName }}
-        </el-menu-item>
-        <template
-          v-if="
-            item.children && item.children.length > 1 && !item.meta?.isHidden
-          "
-        >
-          <el-sub-menu :index="item.path">
-            <template #title>{{ item.meta?.routeName }}</template>
-            <!--组件递归-->
-            <MenuList :menu-list="item.children" />
-          </el-sub-menu>
         </template>
+      </el-menu-item>
+      <el-menu-item
+        v-if="
+          item.children && item.children.length === 1 && !item.meta?.isHidden
+        "
+        :index="item.path"
+      >
+        <el-icon>
+          <component :is="item.children[0]?.meta?.icon" />
+        </el-icon>
+        <template #title>
+          {{ item.children[0]?.meta?.routeName }}
+        </template>
+      </el-menu-item>
+      <template
+        v-if="item.children && item.children.length > 1 && !item.meta?.isHidden"
+      >
+        <el-sub-menu :index="item.path">
+          <template #title>
+            <el-icon>
+              <component :is="item.meta?.icon" />
+            </el-icon>
+            {{ item.meta?.routeName }}
+          </template>
+          <!--组件递归-->
+          <MenuList :menu-list="item.children" />
+        </el-sub-menu>
       </template>
-    </el-menu>
+    </template>
   </div>
 </template>
 
@@ -45,8 +55,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.el-menu {
-  border-right: none;
-}
-</style>
+<style lang="scss" scoped></style>

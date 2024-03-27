@@ -4,7 +4,7 @@ import { loginUser } from '@/api/user/user'
 import { constRoute } from '@/routers/constRoute'
 
 import type { ILoginForm } from '@/api/user/type'
-import type { IUserStore } from './type'
+import type { IUserStore } from './types/type'
 
 const useUserStore = defineStore('user', {
   state: (): IUserStore => {

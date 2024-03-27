@@ -11,18 +11,10 @@ export const constRoute: RouteRecordRaw[] = [
       isHidden: true,
     },
   },
-  {
-    path: '/home',
-    name: 'home',
-    component: () => import('@/views/home/HomeIndex.vue'),
-    meta: {
-      routeName: '首页',
-      isHidden: false,
-    },
-  },
+
   {
     path: '/',
-    // redirect: '/home',
+    redirect: '/home',
     name: 'layout',
     component: () => import('@/layout/LayoutIndex.vue'),
     meta: {
@@ -31,12 +23,60 @@ export const constRoute: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: '/test',
-        name: 'test',
+        path: '/home',
+        name: 'home',
         component: () => import('@/views/home/HomeIndex.vue'),
         meta: {
-          routeName: '测试',
+          routeName: '首页',
           isHidden: false,
+          icon: 'House',
+        },
+      },
+    ],
+  },
+  {
+    path: '/screen',
+    name: 'Screen',
+    component: () => import('@/views/screen/ScreenIndex.vue'),
+    meta: {
+      routeName: '数据大屏',
+      icon: 'Monitor',
+    },
+  },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/layout/LayoutIndex.vue'),
+    meta: {
+      routeName: '权限管理',
+      icon: 'Lock',
+    },
+    children: [
+      {
+        path: '/auth/user',
+        name: 'User',
+        component: () => import('@/views/auth/user/UserIndex.vue'),
+        meta: {
+          routeName: '用户管理',
+          icon: 'UserFilled',
+        },
+      },
+      {
+        path: '/auth/role',
+        name: 'Role',
+        component: () => import('@/views/auth/role/RoleIndex.vue'),
+        meta: {
+          routeName: '角色管理',
+          icon: 'Avatar',
+        },
+      },
+      {
+        path: '/auth/menu',
+        name: 'Permission',
+        component: () => import('@/views/auth/menu/MenuIndex.vue'),
+        meta: {
+          routeName: '菜单管理',
+          icon: 'Operation',
         },
       },
     ],
