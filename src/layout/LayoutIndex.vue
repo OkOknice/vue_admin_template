@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LogoTitle from './logo/LogoTitle.vue'
 import MenuList from './menu/MenuList.vue'
@@ -46,12 +46,21 @@ import Header from './header/Header.vue'
 
 import userStore from '@/store/modules/userStore'
 import useLayoutStore from '@/store/modules/layoutStore'
+
+// import { getUserInfoApi } from '@/api/user/user'
+
 const useUserStore = userStore()
 const layoutStore = useLayoutStore()
-const router = useRoute()
+const route = useRoute()
 const $router = useRouter()
+
+onMounted(() => {
+  useUserStore.loadUserInfo()
+  // const res = await getUserInfoApi()
+  // console.log(res)
+})
 // console.log($router.path)
-const path = ref<string>(router.path)
+const path = ref<string>(route.path)
 
 const goToRoute = (route: string) => {
   $router.push(route)

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { loginUser } from '@/api/user/user'
+import { loginUser, getUserInfoApi } from '@/api/user/user'
 
 import { constRoute } from '@/routers/constRoute'
 
@@ -11,6 +11,7 @@ const useUserStore = defineStore('user', {
     return {
       token: localStorage.getItem('token'),
       menuList: constRoute,
+      userInfo: {},
     }
   },
   actions: {
@@ -23,6 +24,21 @@ const useUserStore = defineStore('user', {
       } else {
         return Promise.reject(new Error(res.data.message))
       }
+    },
+    // 获取用户信息
+    async loadUserInfo() {
+      const res = await getUserInfoApi()
+      if (res.code === 200) {
+        this.userInfo.userId = res.data.checkUser.userId
+        this.userInfo.avatar = res.data.checkUser.avatar
+        this.userInfo.username = res.data.checkUser.username
+      }
+    },
+    // 清除用户信息
+    async clearUserInfo() {
+      this.token = ''
+      this.userInfo = {}
+      localStorage.removeItem('token')
     },
   },
 })

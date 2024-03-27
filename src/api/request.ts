@@ -41,7 +41,7 @@ class Request {
     this.instance.interceptors.response.use(
       (res) => {
         if (res.status === 200) {
-          console.log(res)
+          // console.log(res)
           console.log('全局响应成功的拦截')
           return res.data
         } else {

@@ -18,20 +18,17 @@
       <el-button icon="Refresh" circle @click="refreshPage" />
       <el-button icon="FullScreen" circle @click="openFullScreen" />
       <el-button icon="Setting" circle />
-      <img
-        class="img"
-        src="https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
-      />
+      <img class="img" :src="userStore.userInfo.avatar" />
       <el-dropdown>
         <span class="el-dropdown-link">
-          admin
+          {{ userStore.userInfo.username }}
           <el-icon class="el-icon--right">
             <arrow-down />
           </el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>退出登录</el-dropdown-item>
+            <el-dropdown-item @click="loginout">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -41,18 +38,37 @@
 
 <script setup lang="ts">
 // import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import useLayoutStore from '@/store/modules/layoutStore'
+import useUserStore from '@/store/modules/userStore'
 
 // const isExpand = ref<boolean>(true)
+const $router = useRouter()
 const layoutStore = useLayoutStore()
+const userStore = useUserStore()
+// 伸缩
 const changeExpand = () => {
-  // isExpand.value = !isExpand.value
   layoutStore.changeIsExpand()
 }
+// 刷新
 const refreshPage = () => {
   layoutStore.changeIsRefresh()
 }
-const openFullScreen = () => {}
+// 全屏
+const openFullScreen = () => {
+  let full = document.fullscreenElement
+  if (!full) {
+    document.documentElement.requestFullscreen()
+  } else {
+    document.exitFullscreen()
+  }
+}
+// 退出登录
+const loginout = () => {
+  userStore.clearUserInfo().then(() => {
+    $router.push('/login')
+  })
+}
 </script>
 
 <style lang="scss" scoped>
