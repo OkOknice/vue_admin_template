@@ -14,6 +14,7 @@ import 'element-plus/dist/index.css'
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 // 导入全局组件
 import GlobalComponent from './components'
+import 'virtual:svg-icons-register'
 
 // 导入样式
 import '@/assets/styles/index.scss'

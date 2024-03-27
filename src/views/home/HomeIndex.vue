@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>我是登录后的界面</h1>
+    <h1>
+      我是登录后的界面
+      <SvgIcon name="welcome" />
+    </h1>
   </div>
 </template>
 
