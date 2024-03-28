@@ -38,12 +38,13 @@
 
 <script setup lang="ts">
 // import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import useLayoutStore from '@/store/modules/layoutStore'
 import useUserStore from '@/store/modules/userStore'
 
 // const isExpand = ref<boolean>(true)
 const $router = useRouter()
+const route = useRoute()
 const layoutStore = useLayoutStore()
 const userStore = useUserStore()
 // 伸缩
@@ -66,7 +67,12 @@ const openFullScreen = () => {
 // 退出登录
 const loginout = () => {
   userStore.clearUserInfo().then(() => {
-    $router.push('/login')
+    $router.push({
+      path: '/login',
+      query: {
+        redirect: route.path,
+      },
+    })
   })
 }
 </script>

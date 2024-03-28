@@ -11,6 +11,7 @@
           :default-active="path"
           @select="goToRoute"
           :collapse="!layoutStore.isExpand"
+          :unique-opened="true"
         >
           <MenuList :menu-list="useUserStore.menuList" />
         </el-menu>
@@ -55,9 +56,7 @@ const route = useRoute()
 const $router = useRouter()
 
 onMounted(() => {
-  useUserStore.loadUserInfo()
-  // const res = await getUserInfoApi()
-  // console.log(res)
+  // useUserStore.loadUserInfo()
 })
 // console.log($router.path)
 const path = ref<string>(route.path)

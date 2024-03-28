@@ -11,33 +11,43 @@ const useUserStore = defineStore('user', {
     return {
       token: localStorage.getItem('token'),
       menuList: constRoute,
-      userInfo: {},
+      userInfo: {
+        avatar: '',
+        username: '',
+      },
     }
   },
   actions: {
     async loginAction(data: ILoginForm) {
       const res = await loginUser(data)
+      console.log(res)
       if (res.code === 200 && res.data) {
-        this.token = res.data.token
-        localStorage.setItem('token', res.data.token)
+        this.token = res.data
+        localStorage.setItem('token', res.data)
         return ''
       } else {
-        return Promise.reject(new Error(res.data.message))
+        return Promise.reject(new Error(res.message))
       }
     },
     // 获取用户信息
     async loadUserInfo() {
       const res = await getUserInfoApi()
       if (res.code === 200) {
-        this.userInfo.userId = res.data.checkUser.userId
-        this.userInfo.avatar = res.data.checkUser.avatar
-        this.userInfo.username = res.data.checkUser.username
+        // this.userInfo.userId = res.data.checkUser.userId
+        this.userInfo.avatar = res.data.avatar
+        this.userInfo.username = res.data.name
+        return 'ok'
+      } else {
+        return Promise.reject(new Error('登录失效'))
       }
     },
     // 清除用户信息
     async clearUserInfo() {
       this.token = ''
-      this.userInfo = {}
+      this.userInfo = {
+        username: '',
+        avatar: '',
+      }
       localStorage.removeItem('token')
     },
   },

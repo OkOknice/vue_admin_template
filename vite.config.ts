@@ -1,11 +1,12 @@
 import path from 'path'
-import { ConfigEnv, UserConfigExport } from 'vite'
+import { ConfigEnv, UserConfigExport, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
 // https://vitejs.dev/config/
-export default ({ command }: ConfigEnv): UserConfigExport => {
+export default ({ command, mode }: ConfigEnv): UserConfigExport => {
+  const env = loadEnv(mode, process.cwd())
   return {
     plugins: [
       vue(),
@@ -27,6 +28,14 @@ export default ({ command }: ConfigEnv): UserConfigExport => {
         scss: {
           javascriptEnabled: true,
           additionalData: '@import "./src/assets/styles/variable.scss";',
+        },
+      },
+    },
+    server: {
+      proxy: {
+        '/api': {
+          target: env.VITE_URL,
+          changeOrigin: true,
         },
       },
     },

@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import userStore from '@/store/modules/userStore'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 import { User, Lock } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
@@ -45,6 +45,7 @@ import type { ILoginForm } from '@/api/user/type'
 
 const useUserStore = userStore()
 const $router = useRouter()
+const route = useRoute()
 
 const ruleForm = reactive<FormRules<ILoginForm>>({
   username: [
@@ -72,7 +73,8 @@ const login = () => {
           type: 'success',
           message: '登录成功',
         })
-        $router.push('/')
+        const redirect = route.query.redirect
+        $router.push((redirect as string) || '/')
       } catch (error) {
         ElNotification({
           type: 'error',

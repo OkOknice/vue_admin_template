@@ -1,7 +1,7 @@
 import Client from './request'
 
 const client = new Client({
-  baseURL: '',
+  baseURL: import.meta.env.VITE_URL,
   timeout: 5000,
 })
 

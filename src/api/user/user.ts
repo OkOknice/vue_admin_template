@@ -1,14 +1,14 @@
 import client from '..'
-import type { ResponseData, ILoginForm, IResponseUserInfo } from './type'
+import type { ILoginResponseData, ILoginForm, IResponseUserInfo } from './type'
 
 // 用户接口 API 的管理
 enum USER_API {
-  LOGIN_API = '/api/user/login', // 登录 API
-  GET_USER_INFO_API = '/api/user/info', // 获取用户信息 API
+  LOGIN_API = '/admin/acl/index/login', // 登录 API
+  GET_USER_INFO_API = '/admin/acl/index/info', // 获取用户信息 API
 }
 
 export const loginUser = (data: ILoginForm) => {
-  return client.post<ResponseData>({
+  return client.post<ILoginResponseData>({
     url: USER_API.LOGIN_API,
     data,
   })
@@ -17,11 +17,5 @@ export const loginUser = (data: ILoginForm) => {
 export const getUserInfoApi = () => {
   return client.get<IResponseUserInfo>({
     url: USER_API.GET_USER_INFO_API,
-    // interceptors: {
-    //   requestSuccessFn(config) {
-    //     console.log(config)
-    //     return config
-    //   },
-    // },
   })
 }
