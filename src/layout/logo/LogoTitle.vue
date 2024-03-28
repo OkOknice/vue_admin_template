@@ -4,7 +4,7 @@
       class="logo-title"
       :class="layoutStore.isExpand ? '' : 'logo-no-title'"
     >
-      OKOK管理后台
+      OKOK管理后台模板
     </div>
   </div>
 </template>

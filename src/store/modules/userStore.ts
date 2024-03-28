@@ -20,7 +20,6 @@ const useUserStore = defineStore('user', {
   actions: {
     async loginAction(data: ILoginForm) {
       const res = await loginUser(data)
-      console.log(res)
       if (res.code === 200 && res.data) {
         this.token = res.data
         localStorage.setItem('token', res.data)
@@ -33,7 +32,6 @@ const useUserStore = defineStore('user', {
     async loadUserInfo() {
       const res = await getUserInfoApi()
       if (res.code === 200) {
-        // this.userInfo.userId = res.data.checkUser.userId
         this.userInfo.avatar = res.data.avatar
         this.userInfo.username = res.data.name
         return 'ok'

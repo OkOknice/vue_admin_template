@@ -6,6 +6,7 @@ const layoutStore = defineStore('layoutStore', {
     return {
       isExpand: true,
       isRefresh: true,
+      matchList: [],
     }
   },
   actions: {
@@ -17,6 +18,12 @@ const layoutStore = defineStore('layoutStore', {
       nextTick(() => {
         this.isRefresh = true
       })
+    },
+    setMatchList(payload: any) {
+      payload = payload.filter((item: any) => {
+        return item.path !== '/'
+      })
+      this.matchList = payload
     },
   },
 })

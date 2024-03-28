@@ -23,7 +23,7 @@
               />
             </el-form-item>
             <el-button class="login-btn" type="primary" @click="login">
-              登录
+              登 录
             </el-button>
           </el-form>
         </div>

@@ -15,8 +15,7 @@ export interface ILoginResponseData extends ICommonResponseResult {
 export interface IResponseUserInfo extends ICommonResponseResult {
   data: IUserInfo
 }
-
-export interface IUserInfo {
+interface IUserInfo {
   name: string
   avatar: string
   buttons: string[]

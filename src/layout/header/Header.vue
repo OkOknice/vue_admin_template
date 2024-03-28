@@ -9,8 +9,12 @@
       </div>
       <div class="breadcrumb">
         <el-breadcrumb separator-icon="ArrowRight">
-          <el-breadcrumb-item>权限管理</el-breadcrumb-item>
-          <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+          <el-breadcrumb-item
+            v-for="item in layoutStore.matchList"
+            :key="(item as any).path"
+          >
+            {{ (item as any).meta?.routeName }}
+          </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
     </div>
@@ -83,6 +87,7 @@ const loginout = () => {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
   .header-left {
     margin-left: 20px;
     display: flex;

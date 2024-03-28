@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import LogoTitle from './logo/LogoTitle.vue'
 import MenuList from './menu/MenuList.vue'
@@ -52,14 +52,9 @@ import useLayoutStore from '@/store/modules/layoutStore'
 
 const useUserStore = userStore()
 const layoutStore = useLayoutStore()
-const route = useRoute()
+const routes = useRoute()
 const $router = useRouter()
-
-onMounted(() => {
-  // useUserStore.loadUserInfo()
-})
-// console.log($router.path)
-const path = ref<string>(route.path)
+const path = ref<string>(routes.path)
 
 const goToRoute = (route: string) => {
   $router.push(route)
@@ -107,7 +102,7 @@ const goToRoute = (route: string) => {
     }
     .layout-right-container {
       height: calc(100vh - $layout-right-header-height);
-      background-color: pink;
+      /* background-color: pink; */
       padding: 20px;
       overflow: hidden;
       overflow-y: scroll;
