@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts" name="LoginIndex">
 import { ref, reactive } from 'vue'
 import userStore from '@/store/modules/userStore'
 import { useRouter, useRoute } from 'vue-router'
