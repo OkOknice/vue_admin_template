@@ -133,7 +133,7 @@
       :id="userId"
       @refresh-page="loadUserPage"
     />
-    <AllotForm ref="allotRoleRef" :id="userId" />
+    <AllotForm ref="allotRoleRef" :id="userId" @refresh-page="loadUserPage" />
   </div>
 </template>
 

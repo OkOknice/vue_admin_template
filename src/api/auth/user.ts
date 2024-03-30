@@ -7,6 +7,7 @@ import type {
   IUserResData,
   IUserResInfo,
   IUserRoleResData,
+  IReqUserRole,
 } from './types/userType'
 
 enum USER_API {
@@ -17,6 +18,7 @@ enum USER_API {
   DELETE_USER_API = '/admin/acl/user/remove', // 删除用户
   BATCH_USER_API = '/admin/acl/user/batchRemove', // 批量删除
   USER_ROLE_API = '/admin/acl/user/toAssign', // 用户角色
+  ASSIGN_USER_ROLE_API = '/admin/acl/user/doAssignRole',
 }
 
 // 获取分页数据
@@ -71,5 +73,13 @@ export const deleteAllUserApi = (data: number[]) => {
 export const getUserRoleApi = (id: number) => {
   return client.get<IUserRoleResData>({
     url: `${USER_API.USER_ROLE_API}/${id}`,
+  })
+}
+
+// 分配用户角色
+export const assginUserRoleApi = (data: IReqUserRole) => {
+  return client.post<IUserResData>({
+    url: USER_API.ASSIGN_USER_ROLE_API,
+    data,
   })
 }

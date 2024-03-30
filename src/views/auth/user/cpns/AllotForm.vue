@@ -5,7 +5,7 @@
       <template #default>
         <el-form>
           <el-form-item label="用户姓名：">
-            <el-input disabled></el-input>
+            <el-input v-model="username" disabled></el-input>
           </el-form-item>
           <el-form-item label="职位列表：">
             <div>
@@ -40,8 +40,13 @@
 
 <script setup lang="ts" name="AllotForm">
 import { ref, watch } from 'vue'
-import { getUserRoleApi } from '@/api/auth/user'
-import type { IRoleInfo } from '@/api/auth/types/userType'
+import {
+  getUserRoleApi,
+  assginUserRoleApi,
+  getUserInfoResApi,
+} from '@/api/auth/user'
+import type { IRoleInfo, IReqUserRole } from '@/api/auth/types/userType'
+import { ElMessage } from 'element-plus'
 
 interface IProp {
   id: number
@@ -53,15 +58,24 @@ const isShowDrawer = ref<boolean>(false)
 const isAllSelect = ref<boolean>(false)
 const allRolesList = ref<IRoleInfo[]>([])
 const assignRoles = ref<number[]>([])
+const username = ref<string>('')
 watch(
   () => prop.id,
   () => {
-    assignRoles.value = []
-    allRolesList.value = []
-    isShowDrawer.value && getUserRole()
+    getUserRole()
+    getUserInfo()
   },
 )
+// 获取用户信息
+const getUserInfo = async () => {
+  const res = await getUserInfoResApi(prop.id)
+  if (res.code === 200 && res.data) {
+    username.value = res.data.username
+  }
+}
 const getUserRole = async () => {
+  allRolesList.value = []
+  assignRoles.value = []
   const res = await getUserRoleApi(prop.id)
   if (res.code === 200 && res.data) {
     allRolesList.value = res.data.allRolesList
@@ -75,8 +89,25 @@ const changeSelect = () => {
     assignRoles.value = []
   }
 }
-const confirmForm = () => {
-  console.log(assignRoles.value)
+const confirmForm = async () => {
+  const params: IReqUserRole = {
+    roleIdList: assignRoles.value,
+    userId: prop.id,
+  }
+  const res = await assginUserRoleApi(params)
+  if (res.code === 200) {
+    ElMessage({
+      type: 'success',
+      message: '分配成功',
+    })
+  } else {
+    ElMessage({
+      type: 'error',
+      message: '分配失败',
+    })
+  }
+  emits('refreshPage')
+  closeDrawer()
 }
 const openDrawer = () => {
   isShowDrawer.value = true
@@ -87,6 +118,7 @@ const closeDrawer = () => {
 defineExpose({
   openDrawer,
 })
+const emits = defineEmits(['refreshPage'])
 </script>
 
 <style lang="scss" scoped></style>

@@ -55,3 +55,9 @@ interface IRoleList {
 export interface IUserRoleResData extends ICommonResponseResult {
   data?: IRoleList
 }
+
+// 分配用户角色
+export interface IReqUserRole {
+  roleIdList: number[]
+  userId: number
+}
