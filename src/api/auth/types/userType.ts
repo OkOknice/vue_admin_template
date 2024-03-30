@@ -40,13 +40,12 @@ export interface IUserResInfo extends ICommonResponseResult {
   data?: IUser
 }
 
-interface IRoleInfo {
+export interface IRoleInfo {
   id: number
   roleName: string
   remark: string | null
   ceateTime: string
   updateTime: string
-  isSeleted?: boolean
 }
 interface IRoleList {
   allRolesList: IRoleInfo[]

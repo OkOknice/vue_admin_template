@@ -86,7 +86,7 @@ watch(
   () => prop.id,
   (newV) => {
     formParams.value.id = newV
-    getUserInfo()
+    isShowDrawer.value && getUserInfo()
   },
 )
 

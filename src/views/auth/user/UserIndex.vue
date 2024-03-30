@@ -90,7 +90,7 @@
                 type="primary"
                 size="small"
                 plain
-                @click="openAllot"
+                @click="openAllot(scope.row)"
               >
                 分配角色
               </el-button>
@@ -133,7 +133,7 @@
       :id="userId"
       @refresh-page="loadUserPage"
     />
-    <AllotForm ref="allotRoleRef" />
+    <AllotForm ref="allotRoleRef" :id="userId" />
   </div>
 </template>
 
@@ -183,7 +183,8 @@ const loadUserPage = async () => {
     })
   }
 }
-const openAllot = () => {
+const openAllot = (payload: IUser) => {
+  userId.value = payload.id
   allotRoleRef.value?.openDrawer()
 }
 
