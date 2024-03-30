@@ -2,7 +2,7 @@
   <div>
     <el-drawer v-model="isShowDrawer" @close="closeDrawer">
       <template #header>
-        <h4>新增用户</h4>
+        <h4>{{ formParams.id ? '编辑用户' : '新增用户' }}</h4>
       </template>
       <template #default>
         <div>
@@ -19,7 +19,12 @@
                 placeholder="请输入用户昵称"
               ></el-input>
             </el-form-item>
-            <el-form-item label="用户密码：" prop="password" required>
+            <el-form-item
+              v-if="!formParams.id"
+              label="用户密码："
+              prop="password"
+              required
+            >
               <el-input
                 show-password
                 v-model="formParams.password"
@@ -43,7 +48,11 @@
 <script setup lang="ts" name="WriteUserForm">
 import { ref, reactive, watch } from 'vue'
 
-import { addUserApi } from '@/api/auth/user'
+import {
+  addUserApi,
+  getUserInfoResApi,
+  updateUserInfoApi,
+} from '@/api/auth/user'
 
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
 import type { IUser } from '@/api/auth/types/userType'
@@ -77,14 +86,25 @@ watch(
   () => prop.id,
   (newV) => {
     formParams.value.id = newV
+    getUserInfo()
   },
 )
+
+// 获取用户信息
+const getUserInfo = async () => {
+  const res = await getUserInfoResApi(formParams.value.id)
+  if (res.code === 200 && res.data) {
+    formParams.value.name = res.data.name
+    formParams.value.username = res.data.username
+  }
+}
 
 const openDrawer = () => {
   isShowDrawer.value = true
 }
 const closeDrawer = () => {
   isShowDrawer.value = false
+  formParams.value.id = 0
   drawerFormRef.value?.resetFields()
 }
 // 提交用户信息
@@ -92,16 +112,18 @@ const confrimForm = () => {
   drawerFormRef.value?.validate().then(async (valid) => {
     if (valid) {
       console.log(formParams.value)
-      const res = await addUserApi(formParams.value)
+      const res = formParams.value.id
+        ? await updateUserInfoApi(formParams.value)
+        : await addUserApi(formParams.value)
       if (res.code === 200) {
         ElMessage({
           type: 'success',
-          message: '添加成功',
+          message: formParams.value.id ? '编辑成功' : '添加成功',
         })
       } else {
         ElMessage({
           type: 'error',
-          message: '添加失败',
+          message: formParams.value.id ? '编辑失败' : '添加失败',
         })
       }
       closeDrawer()

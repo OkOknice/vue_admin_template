@@ -31,6 +31,28 @@ export interface IUserPageResData extends ICommonResponseResult {
   }
 }
 
-export interface IAddUserResData extends ICommonResponseResult {
+export interface IUserResData extends ICommonResponseResult {
   data?: null
+}
+
+// 用户信息
+export interface IUserResInfo extends ICommonResponseResult {
+  data?: IUser
+}
+
+interface IRoleInfo {
+  id: number
+  roleName: string
+  remark: string | null
+  ceateTime: string
+  updateTime: string
+  isSeleted?: boolean
+}
+interface IRoleList {
+  allRolesList: IRoleInfo[]
+  assignRoles: IRoleInfo[]
+}
+// 用户角色
+export interface IUserRoleResData extends ICommonResponseResult {
+  data?: IRoleList
 }
