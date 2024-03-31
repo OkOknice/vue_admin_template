@@ -1,3 +1,4 @@
+import { IRoleInfo } from './roleType'
 interface ICommonResponseResult {
   code: number
   message: string
@@ -40,13 +41,6 @@ export interface IUserResInfo extends ICommonResponseResult {
   data?: IUser
 }
 
-export interface IRoleInfo {
-  id: number
-  roleName: string
-  remark: string | null
-  ceateTime: string
-  updateTime: string
-}
 interface IRoleList {
   allRolesList: IRoleInfo[]
   assignRoles: IRoleInfo[]

@@ -48,7 +48,8 @@ import {
   assginUserRoleApi,
   getUserInfoResApi,
 } from '@/api/auth/user'
-import type { IRoleInfo, IReqUserRole } from '@/api/auth/types/userType'
+import type { IRoleInfo } from '@/api/auth/types/roleType'
+import type { IReqUserRole } from '@/api/auth/types/userType'
 import { ElMessage } from 'element-plus'
 
 interface IProp {
