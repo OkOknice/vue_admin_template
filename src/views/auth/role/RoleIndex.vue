@@ -25,7 +25,9 @@
     <div class="role-table">
       <el-card>
         <div class="table-btn">
-          <el-button type="primary" icon="Plus">添加职位</el-button>
+          <el-button type="primary" icon="Plus" @click="addRole">
+            添加职位
+          </el-button>
         </div>
         <el-table border :data="roleList" style="width: 100%">
           <el-table-column
@@ -55,10 +57,21 @@
           />
           <el-table-column label="操作" width="300px" align="center">
             <template #default="scoped">
-              <el-button icon="User" type="primary" size="small" plain>
+              <el-button
+                icon="User"
+                type="primary"
+                size="small"
+                plain
+                @click="openAssignRole(scoped.row)"
+              >
                 分配角色
               </el-button>
-              <el-button icon="Edit" type="primary" size="small">
+              <el-button
+                icon="Edit"
+                type="primary"
+                size="small"
+                @click="edieRole(scoped.row)"
+              >
                 编辑
               </el-button>
               <el-popconfirm
@@ -87,6 +100,13 @@
         </div>
       </el-card>
     </div>
+    <WriteRoleForm
+      :id="roleId"
+      :roleName="roleFormName"
+      ref="writeRoleFormRef"
+      @refres-page="getRolePage"
+    />
+    <AssignRole :id="roleId" ref="assignRoleRef" @refres-page="getRolePage" />
   </div>
 </template>
 
@@ -97,11 +117,19 @@ import { getRolePageApi, deleteRoleApi } from '@/api/auth/role'
 
 import type { IRoleInfo, IRolePageParams } from '@/api/auth/types/roleType'
 
+import WriteRoleForm from './cpns/WriteRoleForm.vue'
+import AssignRole from './cpns/AssignRole.vue'
+
 const pageNo = ref<number>(1)
 const pageSize = ref<number>(5)
 const total = ref<number>(0)
 const roleName = ref<string>('')
 const roleList = ref<IRoleInfo[]>([])
+const roleId = ref<number>(0)
+const roleFormName = ref<string>('')
+
+const writeRoleFormRef = ref<InstanceType<typeof WriteRoleForm>>()
+const assignRoleRef = ref<InstanceType<typeof AssignRole>>()
 
 onMounted(() => {
   getRolePage()
@@ -118,6 +146,23 @@ const getRolePage = async () => {
     roleList.value = res.data.records
     total.value = res.data.total
   }
+}
+
+const openAssignRole = (payload: IRoleInfo) => {
+  roleId.value = payload.id
+  assignRoleRef.value?.openDrawer()
+}
+
+const addRole = () => {
+  roleId.value = 0
+  roleFormName.value = ''
+  writeRoleFormRef.value?.openDialog()
+}
+
+const edieRole = (payload: IRoleInfo) => {
+  roleId.value = payload.id
+  roleFormName.value = payload.roleName
+  writeRoleFormRef.value?.openDialog()
 }
 
 const deleteRole = async (id: number) => {

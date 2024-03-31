@@ -31,3 +31,36 @@ export interface IRolePageResData extends ICommonResponseResult {
 export interface IRoleResData extends ICommonResponseResult {
   data?: null
 }
+
+export interface IConfirmRole {
+  id: number
+  roleName: string
+}
+
+// 分配角色
+export interface IMenuInfo {
+  id: number
+  createTime: string
+  updateTime: string
+  pid: 0
+  name: string
+  code: string | null
+  toCode: string | null
+  type: number
+  status: number | null
+  level: number
+  select: boolean
+  children: []
+}
+// export interface IMenuData extends IMenuInfo {
+//   children: IMenuInfo[]
+// }
+
+export interface IMenuList extends ICommonResponseResult {
+  data: IMenuInfo[]
+}
+
+export interface IAssignRoleReq {
+  roleId: number
+  permissionId: number[]
+}
