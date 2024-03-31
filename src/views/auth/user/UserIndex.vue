@@ -189,6 +189,7 @@ const openAllot = (payload: IUser) => {
 }
 
 const addUser = () => {
+  userId.value = 0
   writrUserRef.value?.openDrawer()
 }
 const editUser = (payload: IUser) => {

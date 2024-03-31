@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-drawer v-model="isShowDrawer" @close="closeDrawer">
+    <el-drawer v-model="isShowDrawer" @close="closeDrawer" @open="handleDrawer">
       <template #header>分配角色</template>
       <template #default>
         <el-form>
@@ -16,7 +16,10 @@
               >
                 全选
               </el-checkbox>
-              <el-checkbox-group v-model="assignRoles">
+              <el-checkbox-group
+                v-model="assignRoles"
+                @change="handleCheckboxGroup"
+              >
                 <el-checkbox
                   v-for="item in allRolesList"
                   :key="item.id"
@@ -62,7 +65,6 @@ const username = ref<string>('')
 watch(
   () => prop.id,
   () => {
-    getUserRole()
     getUserInfo()
   },
 )
@@ -80,6 +82,7 @@ const getUserRole = async () => {
   if (res.code === 200 && res.data) {
     allRolesList.value = res.data.allRolesList
     assignRoles.value = res.data.assignRoles.map((item) => item.id)
+    isAllSelect.value = assignRoles.value.length === allRolesList.value.length
   }
 }
 const changeSelect = () => {
@@ -88,6 +91,9 @@ const changeSelect = () => {
   } else {
     assignRoles.value = []
   }
+}
+const handleCheckboxGroup = () => {
+  isAllSelect.value = assignRoles.value.length === allRolesList.value.length
 }
 const confirmForm = async () => {
   const params: IReqUserRole = {
@@ -112,8 +118,12 @@ const confirmForm = async () => {
 const openDrawer = () => {
   isShowDrawer.value = true
 }
+const handleDrawer = () => {
+  getUserRole()
+}
 const closeDrawer = () => {
   isShowDrawer.value = false
+  isAllSelect.value = false
 }
 defineExpose({
   openDrawer,

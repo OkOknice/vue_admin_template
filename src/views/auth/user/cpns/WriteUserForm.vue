@@ -1,8 +1,8 @@
 <template>
   <div>
-    <el-drawer v-model="isShowDrawer" @close="closeDrawer">
+    <el-drawer v-model="isShowDrawer" @close="closeDrawer" @open="handleDrawer">
       <template #header>
-        <h4>{{ formParams.id ? '编辑用户' : '新增用户' }}</h4>
+        <h4>{{ prop.id ? '编辑用户' : '新增用户' }}</h4>
       </template>
       <template #default>
         <div>
@@ -20,7 +20,7 @@
               ></el-input>
             </el-form-item>
             <el-form-item
-              v-if="!formParams.id"
+              v-if="!prop.id"
               label="用户密码："
               prop="password"
               required
@@ -46,7 +46,7 @@
 </template>
 
 <script setup lang="ts" name="WriteUserForm">
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive } from 'vue'
 
 import {
   addUserApi,
@@ -82,17 +82,17 @@ const ruleForm = reactive<FormRules<IUser>>({
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
 })
 
-watch(
-  () => prop.id,
-  (newV) => {
-    formParams.value.id = newV
-    isShowDrawer.value && getUserInfo()
-  },
-)
+// watch(
+//   () => prop.id,
+//   (newV) => {
+//     formParams.value.id = newV
+//     // isShowDrawer.value && getUserInfo()
+//   },
+// )
 
 // 获取用户信息
 const getUserInfo = async () => {
-  const res = await getUserInfoResApi(formParams.value.id)
+  const res = await getUserInfoResApi(prop.id)
   if (res.code === 200 && res.data) {
     formParams.value.name = res.data.name
     formParams.value.username = res.data.username
@@ -107,10 +107,15 @@ const closeDrawer = () => {
   formParams.value.id = 0
   drawerFormRef.value?.resetFields()
 }
+const handleDrawer = () => {
+  console.log(prop.id)
+  prop.id && getUserInfo()
+}
 // 提交用户信息
 const confrimForm = () => {
   drawerFormRef.value?.validate().then(async (valid) => {
     if (valid) {
+      formParams.value.id = prop.id
       console.log(formParams.value)
       const res = formParams.value.id
         ? await updateUserInfoApi(formParams.value)
