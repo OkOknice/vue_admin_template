@@ -15,9 +15,10 @@
         <template #default="scoped">
           <el-button
             icon="Plus"
-            :disabled="!scoped.row.children.length && scoped.row.level !== 1"
+            :disabled="!scoped.row.children.length && scoped.row.level === 4"
             size="small"
             plain
+            @click="addMenu(scoped.row)"
           >
             {{ scoped.row.level > 2 ? '添加功能' : '添加菜单' }}
           </el-button>
@@ -26,6 +27,7 @@
             :disabled="scoped.row.level === 1"
             type="primary"
             size="small"
+            @click="editMenu(scoped.row)"
           >
             编辑
           </el-button>
@@ -47,16 +49,35 @@
         </template>
       </el-table-column>
     </el-table>
+    <WriteMenuForm
+      ref="menuFormRef"
+      :id="id"
+      :pid="pid"
+      :level="level"
+      :name="name"
+      :code="code"
+      @refresh-page="getMenu"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getMenuApi, deleteMenuApi } from '@/api/auth/menu'
-import { IMenuInfo } from '@/api/auth/types/roleType'
 import { ElMessage } from 'element-plus'
 
+import WriteMenuForm from './cpns/WriteMenuForm.vue'
+
+import { getMenuApi, deleteMenuApi } from '@/api/auth/menu'
+import { IMenuInfo } from '@/api/auth/types/roleType'
+
 const menuList = ref<IMenuInfo[]>([])
+const id = ref<number>(0)
+const pid = ref<number>(0)
+const level = ref<number>(1)
+const name = ref<string>('')
+const code = ref<string>('')
+
+const menuFormRef = ref<InstanceType<typeof WriteMenuForm>>()
 
 onMounted(() => {
   getMenu()
@@ -67,6 +88,26 @@ const getMenu = async () => {
   if (res.code === 200) {
     menuList.value = res.data
   }
+}
+
+const addMenu = (payload: IMenuInfo) => {
+  console.log(payload)
+  pid.value = payload.id
+  level.value = payload.level + 1
+  name.value = ''
+  code.value = ''
+  id.value = 0
+  menuFormRef.value?.openDialog()
+}
+
+const editMenu = (payload: IMenuInfo) => {
+  console.log(payload)
+  id.value = payload.id
+  name.value = payload.name
+  code.value = payload.code as string
+  level.value = payload.level
+  pid.value = payload.pid
+  menuFormRef.value?.openDialog()
 }
 
 const deleteMenu = async (id: number) => {
