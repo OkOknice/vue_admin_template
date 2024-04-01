@@ -4,11 +4,11 @@ import type {
   IUser,
   IUserPageReqParams,
   IUserPageResData,
-  IUserResData,
   IUserResInfo,
   IUserRoleResData,
   IReqUserRole,
 } from './types/userType'
+import type { IResData } from './types/commonType'
 
 enum USER_API {
   USER_PAGE_API = '/admin/acl/user', // 获取用户管理分页
@@ -33,7 +33,7 @@ export const getUserPageApi = (data: IUserPageReqParams) => {
 
 // 添加用户
 export const addUserApi = (data: IUser) => {
-  return client.post<IUserResData>({
+  return client.post<IResData>({
     url: USER_API.USER_ADD_API,
     data: data,
   })
@@ -48,7 +48,7 @@ export const getUserInfoResApi = (id: number) => {
 
 // 更新用户信息
 export const updateUserInfoApi = (data: IUser) => {
-  return client.put<IUserResData>({
+  return client.put<IResData>({
     url: USER_API.USER_UPDATE_API,
     data,
   })
@@ -56,14 +56,14 @@ export const updateUserInfoApi = (data: IUser) => {
 
 // 删除用户
 export const deleteUserApi = (id: number) => {
-  return client.delete<IUserResData>({
+  return client.delete<IResData>({
     url: `${USER_API.DELETE_USER_API}/${id}`,
   })
 }
 
 // 批量删除用户
 export const deleteAllUserApi = (data: number[]) => {
-  return client.delete<IUserResData>({
+  return client.delete<IResData>({
     url: USER_API.BATCH_USER_API,
     data,
   })
@@ -78,7 +78,7 @@ export const getUserRoleApi = (id: number) => {
 
 // 分配用户角色
 export const assginUserRoleApi = (data: IReqUserRole) => {
-  return client.post<IUserResData>({
+  return client.post<IResData>({
     url: USER_API.ASSIGN_USER_ROLE_API,
     data,
   })

@@ -1,9 +1,5 @@
 import { IRoleInfo } from './roleType'
-interface ICommonResponseResult {
-  code: number
-  message: string
-  ok: boolean
-}
+import type { ICommonResponseResult } from './commonType'
 
 // 请求分页入参
 export interface IUserPageReqParams {
@@ -30,10 +26,6 @@ export interface IUserPageResData extends ICommonResponseResult {
     size: number
     pages: number
   }
-}
-
-export interface IUserResData extends ICommonResponseResult {
-  data?: null
 }
 
 // 用户信息

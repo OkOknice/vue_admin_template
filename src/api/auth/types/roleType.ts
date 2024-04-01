@@ -1,8 +1,4 @@
-interface ICommonResponseResult {
-  code: number
-  message: string
-  ok: boolean
-}
+import type { ICommonResponseResult } from './commonType'
 // 分页入参数
 export interface IRolePageParams {
   page: number
@@ -25,11 +21,6 @@ export interface IRolePageResData extends ICommonResponseResult {
     size: number
     pages: number
   }
-}
-
-// 返回数据
-export interface IRoleResData extends ICommonResponseResult {
-  data?: null
 }
 
 export interface IConfirmRole {

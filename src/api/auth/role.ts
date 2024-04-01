@@ -3,11 +3,12 @@ import client from '..'
 import type {
   IRolePageParams,
   IRolePageResData,
-  IRoleResData,
   IConfirmRole,
   IMenuList,
   IAssignRoleReq,
 } from './types/roleType'
+
+import type { IResData } from './types/commonType'
 
 enum ROLE_API {
   ROLE_PAGE_API = '/admin/acl/role', // 角色分页
@@ -31,14 +32,14 @@ export const getRolePageApi = (params: IRolePageParams) => {
 
 // 删除角色
 export const deleteRoleApi = (id: number) => {
-  return client.delete<IRoleResData>({
+  return client.delete<IResData>({
     url: `${ROLE_API.DELETE_ROLE_API}/${id}`,
   })
 }
 
 // 新增角色
 export const addRoleApi = (data: IConfirmRole) => {
-  return client.post<IRoleResData>({
+  return client.post<IResData>({
     url: ROLE_API.ADD_ROLE_API,
     data,
   })
@@ -46,7 +47,7 @@ export const addRoleApi = (data: IConfirmRole) => {
 
 // 编辑角色
 export const updateRoleApi = (data: IConfirmRole) => {
-  return client.put<IRoleResData>({
+  return client.put<IResData>({
     url: ROLE_API.UPDATE_ROLE_API,
     data,
   })
@@ -61,7 +62,7 @@ export const getMenuRoleApi = (id: number) => {
 
 // 分配角色
 export const assignRoleApi = (data: IAssignRoleReq) => {
-  return client.post<IRoleResData>({
+  return client.post<IResData>({
     url: `${ROLE_API.ASSIGN_ROLE_API}?roleId=${data.roleId}&permissionId=${data.permissionId}`,
   })
 }
