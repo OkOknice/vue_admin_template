@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 用户请求的 mock 类型接口定义
+ */
+
 interface ICommonResponseResult {
   code: number
   message: string

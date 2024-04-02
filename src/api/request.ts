@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc Axios 二次封装
+ */
+
 import axios from 'axios'
 import type { AxiosInstance } from 'axios'
 import type { HYRequestConfig } from './types'

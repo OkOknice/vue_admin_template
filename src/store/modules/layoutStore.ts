@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 布局 store
+ */
+
 import { defineStore } from 'pinia'
 import { nextTick } from 'vue'
 

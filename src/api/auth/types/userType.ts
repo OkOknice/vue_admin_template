@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 用户 API 的类型定义
+ */
+
 import { IRoleInfo } from './roleType'
 import type { ICommonResponseResult } from './commonType'
 

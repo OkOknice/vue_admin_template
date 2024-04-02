@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 用户 mock 请求接口
+ */
+
 import client from '..'
 import type { ILoginResponseData, ILoginForm, IResponseUserInfo } from './type'
 

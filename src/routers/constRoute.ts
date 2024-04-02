@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 常用路由模块
+ */
+
 import type { RouteRecordRaw } from 'vue-router'
 
 // 常用路由

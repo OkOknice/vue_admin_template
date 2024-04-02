@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 统一的错误状态码方法
+ */
+
 import { ElMessage } from 'element-plus'
 
 export const getErrorCode = (code: number, error: any) => {

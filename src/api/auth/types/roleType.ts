@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 角色 API 的类型定义
+ */
+
 import type { ICommonResponseResult } from './commonType'
 // 分页入参数
 export interface IRolePageParams {

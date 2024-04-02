@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 用户 store
+ */
+
 import { defineStore } from 'pinia'
 import { loginUser, getUserInfoApi } from '@/api/user/user'
 

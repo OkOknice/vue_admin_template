@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-01
+ * @desc 菜单 API 模块
+ */
+
 import client from '..'
 import type { IResData } from './types/commonType'
 import type { IMenuParams } from './types/menuType'

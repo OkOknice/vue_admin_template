@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc Axios 的类型定义
+ */
+
 import type { AxiosRequestConfig, AxiosResponse } from 'axios'
 
 // 针对AxiosRequestConfig配置进行扩展

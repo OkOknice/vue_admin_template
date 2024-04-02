@@ -1,3 +1,9 @@
+/**
+ * @author OKOK
+ * @date 2024-04-02
+ * @desc 路由守卫
+ */
+
 import router from '.'
 import pinia from '@/store'
 
